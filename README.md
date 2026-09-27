@@ -55,6 +55,8 @@ main.demo.transaction_predictions
 .
 ├── README.md
 ├── requirements.txt
+├── assets/
+│   └── mlflow-model-metrics.png
 ├── notebooks/
 │   └── suspicious_transaction_demo.py
 └── docs/
@@ -115,3 +117,41 @@ A production version should consider point-in-time feature engineering, categori
 ## Disclaimer
 
 This project uses synthetic data and is intended for demonstration and learning purposes only.
+
+## Model results
+
+The Random Forest run produced **1.00 accuracy, precision, recall, and F1-score** on the synthetic test split. These values validate that the demonstration pipeline can learn the deliberately strong synthetic signal; they should **not** be interpreted as expected production fraud-detection performance.
+
+The suspicious examples were intentionally generated with highly distinguishable characteristics such as high transaction amounts, rapid transaction velocity, and cross-border activity. Real transaction behavior overlaps much more, so production evaluation should use realistic governed labels, temporal validation, point-in-time features, threshold analysis, and additional metrics such as PR-AUC.
+
+![MLflow model metrics showing the tracked Random Forest run](assets/mlflow-model-metrics.png)
+
+### What this result demonstrates
+
+- The training and evaluation pipeline executed successfully in Databricks.
+- Accuracy, precision, recall, and F1 were logged to MLflow.
+- The model run is reproducible and visible through the Databricks experiment UI.
+- The screenshot is evidence of the end-to-end MLflow tracking workflow, rather than a claim of production-level predictive performance.
+
+## MLflow Model Results
+
+The Random Forest experiment was tracked in Databricks MLflow with the following test metrics on the synthetic demonstration dataset:
+
+- Accuracy: **1.00**
+- Precision: **1.00**
+- Recall: **1.00**
+- F1-score: **1.00**
+
+![Databricks MLflow model metrics](assets/mlflow-model-metrics.png)
+
+> **Important:** These metrics should not be interpreted as expected production performance. The synthetic suspicious transactions were intentionally generated with strongly distinguishable patterns, including high transaction amounts, rapid transaction velocity, and cross-border activity. The goal is to demonstrate an end-to-end Databricks ML workflow, not to benchmark a production fraud-detection model.
+
+## MLflow Run & Unity Catalog Registration
+
+The completed MLflow run also captures the model artifacts, training parameters,
+and the registered Unity Catalog model (`main.demo.suspicious_transaction_model`).
+
+![Databricks MLflow run overview and registered model](assets/mlflow-run-overview.png)
+
+The screenshot is privacy-safe: personal account information has been masked while
+preserving the technical experiment details.
